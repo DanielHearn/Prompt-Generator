@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Counter } from "./components/counter/Counter";
+import { Words } from "./components/words/Words";
 
 export default function Home() {
   return (
@@ -29,7 +29,7 @@ export default function Home() {
         </div>
       </div>
 
-      <Counter/>
+      <Words/>
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
