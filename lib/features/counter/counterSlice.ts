@@ -1,7 +1,7 @@
 import { createAppSlice } from "@/lib/createAppSlice";
 import { NOUNS, VERBS, ADJECTIVES, LOCATIONS } from '../../words'
 
-enum WORD_TYPES { 'VERB', 'NOUN', 'ADJECTIVE', 'LOCATION' }
+export enum WORD_TYPES { 'VERB', 'NOUN', 'ADJECTIVE', 'LOCATION' }
 
 export type word = {
   type: WORD_TYPES,
@@ -15,11 +15,18 @@ export interface CounterSliceState {
   words: words;
 }
 
-const wordTypeMap = {
+export const wordTypeMap = {
   [WORD_TYPES.VERB]: VERBS,
   [WORD_TYPES.NOUN]: NOUNS,
   [WORD_TYPES.ADJECTIVE]: ADJECTIVES,
   [WORD_TYPES.LOCATION]: LOCATIONS,
+}
+
+export const wordTypeNames = {
+  [WORD_TYPES.VERB]: 'Verbs',
+  [WORD_TYPES.NOUN]: 'Nouns',
+  [WORD_TYPES.ADJECTIVE]: 'Adjectives',
+  [WORD_TYPES.LOCATION]: 'Locations',
 }
 
 const randomIndexFromArray = (max: number) => {
@@ -78,6 +85,14 @@ export const counterSlice = createAppSlice({
       newWords[index] = newWord
       state.words = newWords.slice()
     }),
+    changeWordType: create.reducer((state, action) => {
+      const { word, index, value } = action.payload
+      console.log(value)
+      const newWord = generateWord(value)
+      const newWords = state.words.slice()
+      newWords[index] = newWord
+      state.words = newWords.slice()
+    }),
   }),
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
@@ -87,7 +102,7 @@ export const counterSlice = createAppSlice({
 });
 
 // Action creators are generated for each case reducer function.
-export const {generateWords, regenerateWord, lockWord } =
+export const {generateWords, regenerateWord, lockWord, changeWordType } =
   counterSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
