@@ -6,7 +6,7 @@ import {
 } from "@/lib/features/counter/counterSlice";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { Word } from '../word/Word'
+import Word from '../word/Word'
 
 export const Words = () => {
   const dispatch = useAppDispatch();
@@ -27,3 +27,5 @@ export const Words = () => {
     </div>
   );
 };
+
+export default Words;

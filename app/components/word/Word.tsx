@@ -7,61 +7,39 @@ import {
   changeWordType,
   wordTypeNames
 } from "@/lib/features/counter/counterSlice";
-
+import { BiLock,  BiLockOpen, BiRefresh, BiDotsVerticalRounded } from "react-icons/bi";
 import { useAppDispatch } from "@/lib/hooks";
-
-const Dropdown = ({ trigger, menu }) => {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <div className="dropdown">
-      {cloneElement(trigger, {
-        onClick: handleOpen,
-      })}
-      {open ? (
-        <ul className="menu">
-          {menu.map((menuItem, index) => (
-            <li key={index} className="menu-item">
-              {cloneElement(menuItem, {
-                onClick: () => {
-                  menuItem.props.onClick();
-                  setOpen(false);
-                },
-              })}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </div>
-  );
-};
+import Dropdown from "../dropdown/Dropdown";
 
 export const Word = (props) => {
   const {word, index} = props;
   const dispatch = useAppDispatch();
 
   return (
-    <div className="flex flex-row m-1 p-1">
-      <div>{word.value}</div>
-      <Dropdown
-          trigger={<button>{wordTypeNames[word.type]}</button>}
-          menu={Object.values(wordTypeNames).map((name, key) => <button key={key} onClick={() => dispatch(changeWordType({word, index, value: key}))}>{name}</button>)}
-      />
-      <input type="checkbox" value={word.locked} onChange={ 
-        () => { dispatch(lockWord({ word, index, value: !word.locked })) }} />
-      <button 
-        onClick={() => {
-          if (!word.locked) {
-            dispatch(regenerateWord({ word, index }))
-          }
-        }}
-        disabled={word.locked}
-        className="disabled:opacity-75"
-      >Regen</button>
+    <div className="word flex flex-row m-1 bg-gray-700 text-white">
+      <div className="flex p-4 items-center bg-slate-600"><BiDotsVerticalRounded/></div>
+      <div className="flex flex-col">
+        <div className="word__value p-4">{word.value}</div>
+        <div className="flex flex-row">
+          <Dropdown
+              menu={Object.values(wordTypeNames).map((name, key) => <button key={key} onClick={() => dispatch(changeWordType({word, index, value: key}))}>{name}</button>)}
+          />
+          <button  className="p-4  hover:bg-gray-600" onClick={ 
+            () => { dispatch(lockWord({ word, index, value: !word.locked })) }}>{word.locked ? <BiLock /> : <BiLockOpen />}
+          </button>
+          <button  className="p-4 disabled:opacity-75 hover:bg-gray-600"
+            onClick={() => {
+              if (!word.locked) {
+                dispatch(regenerateWord({ word, index }))
+              }
+            }}
+            disabled={word.locked}
+          ><BiRefresh />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
+
+export default Word;

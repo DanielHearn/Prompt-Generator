@@ -26,6 +26,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.word:first-child .word__value {
+  text-transform: capitalize;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
