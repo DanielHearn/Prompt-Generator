@@ -1,8 +1,10 @@
 "use client";
 import { useState, cloneElement } from "react";
+import type { ReactElement} from 'react'
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
-export const Dropdown = ({ menu }) => {
+export const Dropdown = (props: { menu: ReactElement[] }) => {
+  const { menu } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {

@@ -33,10 +33,11 @@ const randomIndexFromArray = (max: number) => {
   return Math.floor(Math.random()*max)
 }
 
-const generateWord = (type: WORD_TYPES) => {
+const generateWord = (type: WORD_TYPES): word => {
+  const value =  wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
   return {
     type,
-    value: wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)],
+    value: value || '',
     locked: false,
   }
 } 
@@ -64,12 +65,11 @@ export const counterSlice = createAppSlice({
         if (!word.locked) {
           const newWord = generateWord(word.type)
           return newWord
-        } else {
-          return word
         }
+        return word
       })
     }),
-    regenerateWord: create.reducer((state, action) => {
+    regenerateWord: create.reducer((state, action: { payload: {word: word, index: number} }) => {
       const { word, index } = action.payload
       const newWord = generateWord(word.type)
       newWord.locked = word.locked
@@ -77,7 +77,7 @@ export const counterSlice = createAppSlice({
       newWords[index] = newWord
       state.words = newWords.slice()
     }),
-    lockWord: create.reducer((state, action) => {
+    lockWord: create.reducer((state, action: { payload: { word: word, index: number, value: boolean } }) => {
       const { word, index, value } = action.payload
       const newWord = {...word}
       newWord.locked = value
@@ -85,7 +85,7 @@ export const counterSlice = createAppSlice({
       newWords[index] = newWord
       state.words = newWords.slice()
     }),
-    changeWordType: create.reducer((state, action) => {
+    changeWordType: create.reducer((state, action: { payload: { word: word, index: number, value: WORD_TYPES } }) => {
       const { word, index, value } = action.payload
       const newWord = generateWord(value)
       const newWords = state.words.slice()

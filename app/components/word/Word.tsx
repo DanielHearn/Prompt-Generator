@@ -1,17 +1,18 @@
 "use client";
-import { useState, cloneElement } from "react";
-
 import {
   regenerateWord,
   lockWord,
   changeWordType,
   wordTypeNames
 } from "@/lib/features/counter/counterSlice";
+import type {
+  word as wordType
+} from "@/lib/features/counter/counterSlice";
 import { BiLock,  BiLockOpen, BiRefresh, BiDotsVerticalRounded } from "react-icons/bi";
 import { useAppDispatch } from "@/lib/hooks";
 import Dropdown from "../dropdown/Dropdown";
 
-export const Word = (props) => {
+export const Word = (props: {word: wordType, index: number}) => {
   const {word, index} = props;
   const dispatch = useAppDispatch();
 
