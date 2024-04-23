@@ -87,7 +87,6 @@ export const counterSlice = createAppSlice({
     }),
     changeWordType: create.reducer((state, action) => {
       const { word, index, value } = action.payload
-      console.log(value)
       const newWord = generateWord(value)
       const newWords = state.words.slice()
       newWords[index] = newWord

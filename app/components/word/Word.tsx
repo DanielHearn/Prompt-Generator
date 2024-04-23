@@ -16,15 +16,15 @@ export const Word = (props) => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="word flex flex-row bg-gray-700 text-white rounded-md overflow-hidden">
-      <div className="flex p-4 items-center bg-slate-600"><BiDotsVerticalRounded/></div>
+    <div className="word flex flex-row bg-gray-700 text-white rounded-md">
+      <div className="flex p-4 items-center bg-slate-600 rounded-bl-md rounded-tl-md"><BiDotsVerticalRounded/></div>
       <div className="flex flex-col">
         <div className="word__value p-4">{word.value}</div>
         <div className="flex flex-row">
           <Dropdown
               menu={Object.values(wordTypeNames).map((name, key) => <button key={key} onClick={() => dispatch(changeWordType({word, index, value: key}))}>{name}</button>)}
           />
-          <button  className="p-4  hover:bg-gray-600" onClick={ 
+          <button className={`p-4 hover:bg-gray-600 ${word.locked && 'bg-red-800 hover:bg-red-700'}`} onClick={ 
             () => { dispatch(lockWord({ word, index, value: !word.locked })) }}>{word.locked ? <BiLock /> : <BiLockOpen />}
           </button>
           <button  className="p-4 disabled:opacity-75 hover:bg-gray-600"
