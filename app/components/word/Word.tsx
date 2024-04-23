@@ -16,7 +16,7 @@ export const Word = (props) => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="word flex flex-row m-1 bg-gray-700 text-white">
+    <div className="word flex flex-row bg-gray-700 text-white rounded-md overflow-hidden">
       <div className="flex p-4 items-center bg-slate-600"><BiDotsVerticalRounded/></div>
       <div className="flex flex-col">
         <div className="word__value p-4">{word.value}</div>
