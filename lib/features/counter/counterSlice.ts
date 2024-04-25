@@ -69,6 +69,10 @@ export const counterSlice = createAppSlice({
         return word
       })
     }),
+    setWords: create.reducer((state, action: { payload: { words: words } }) => {
+      const { words } = action.payload
+      state.words = words
+    }),
     regenerateWord: create.reducer((state, action: { payload: {word: word, index: number} }) => {
       const { word, index } = action.payload
       const newWord = generateWord(word.type)
@@ -101,7 +105,7 @@ export const counterSlice = createAppSlice({
 });
 
 // Action creators are generated for each case reducer function.
-export const {generateWords, regenerateWord, lockWord, changeWordType } =
+export const {generateWords, regenerateWord, lockWord, changeWordType, setWords } =
   counterSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.

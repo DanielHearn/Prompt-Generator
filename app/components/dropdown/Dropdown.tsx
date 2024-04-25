@@ -10,6 +10,8 @@ export const Dropdown = (props: { menu: ReactElement[], activeIndex: number }) =
   const handleOpen = () => {
     setOpen(!open);
   };
+
+  
   return (
     <div className="dropdown relative">
       <button onClick={handleOpen} className="p-4 hover:bg-gray-600">{!open ? <BiChevronDown /> : <BiChevronUp />}</button>
