@@ -23,7 +23,8 @@ export const Word = (props: {word: wordType, index: number}) => {
         <div className="word__value p-4">{word.value}</div>
         <div className="flex flex-row">
           <Dropdown
-              menu={Object.values(wordTypeNames).map((name, key) => <button key={key} onClick={() => dispatch(changeWordType({word, index, value: key}))}>{name}</button>)}
+            activeIndex={word.type}
+            menu={Object.values(wordTypeNames).map((name, key) => <button className="flex flex-1 p-2" key={key} onClick={() => dispatch(changeWordType({word, index, value: key}))}>{name}</button>)}
           />
           <button className={`p-4 hover:bg-gray-600 ${word.locked && 'bg-red-800 hover:bg-red-700'}`} onClick={ 
             () => { dispatch(lockWord({ word, index, value: !word.locked })) }}>{word.locked ? <BiLock /> : <BiLockOpen />}
