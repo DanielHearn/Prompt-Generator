@@ -6,7 +6,7 @@ import {
 } from "@/lib/features/counter/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Word from '../word/Word'
-import { Reorder, AnimatePresence } from "framer-motion"
+import { Reorder } from "framer-motion"
 
 export const Words = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +15,7 @@ export const Words = () => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row gap-2">
-        <Reorder.Group className="flex flex-row" axis="x" values={words} onReorder={(newWords) => {
+        <Reorder.Group className="flex flex-row gap-4" axis="x" values={words} onReorder={(newWords) => {
           dispatch(setWords({ words: newWords }))
         }}>
           {words.map((word, i) => <Word word={word} key={word.value} />)}

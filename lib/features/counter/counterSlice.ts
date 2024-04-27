@@ -37,7 +37,8 @@ const randomIndexFromArray = (max: number) => {
 const generateSlug = () => Math.random().toString(16).slice(2)
 
 const generateWord = (type: WORD_TYPES): word => {
-  const value =  wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
+  const value = wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
+  console.log(type, value, randomIndexFromArray(wordTypeMap[type].length))
   return {
     type,
     value: value || '',
