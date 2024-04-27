@@ -73,6 +73,9 @@ export const wordSlice = createAppSlice({
         return word
       })
     }),
+    resetWords: create.reducer((state) => {
+      state.words = generateDefaultWords()
+    }),
     setWords: create.reducer((state, action: { payload: { words: words } }) => {
       const { words } = action.payload
       state.words = words
@@ -103,6 +106,19 @@ export const wordSlice = createAppSlice({
       newWords[index] = newWord
       state.words = newWords.slice()
     }),
+    addWord: create.reducer((state) => {
+      const newWord = generateWord(WORD_TYPES.NOUN)
+      const newWords = state.words.slice()
+      newWords.push(newWord)
+      state.words = newWords.slice()
+    }),
+    removeWord: create.reducer((state, action: { payload: { id: string } }) => {
+      const { id } = action.payload
+      const newWords = state.words.slice()
+      const index = newWords.findIndex(item => item.id === id)
+      newWords.splice(index, 1)
+      state.words = newWords.slice()
+    }),
   }),
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
@@ -112,7 +128,7 @@ export const wordSlice = createAppSlice({
 });
 
 // Action creators are generated for each case reducer function.
-export const {generateWords, regenerateWord, lockWord, changeWordType, setWords } =
+export const {generateWords, regenerateWord, lockWord, changeWordType, setWords, addWord, removeWord, resetWords } =
   wordSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.

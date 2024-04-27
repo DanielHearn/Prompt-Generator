@@ -35,3 +35,7 @@ body {
     text-wrap: balance;
   }
 }
+
+svg {
+  font-size: 20px;
+}

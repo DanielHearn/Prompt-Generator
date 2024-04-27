@@ -3,12 +3,13 @@ import {
   regenerateWord,
   lockWord,
   changeWordType,
-  wordTypeNames
+  wordTypeNames,
+  removeWord
 } from "@/lib/features/words/wordSlice";
 import type {
   word as wordType
 } from "@/lib/features/words/wordSlice";
-import { BiLock,  BiLockOpen, BiRefresh, BiDotsVerticalRounded } from "react-icons/bi";
+import { BiLock,  BiLockOpen, BiRefresh, BiDotsVerticalRounded, BiMinus } from "react-icons/bi";
 import { useAppDispatch } from "@/lib/hooks";
 import Dropdown from "../dropdown/Dropdown";
 import { Reorder, useDragControls } from "framer-motion"
@@ -45,6 +46,14 @@ export const Word = (props: {word: wordType}) => {
                 }}
                 disabled={word.locked}
               ><BiRefresh />
+            </button>
+            <button
+              className="p-4 hover:bg-gray-600"
+              onClick={() => {
+                  dispatch(removeWord({ id: word.id }))
+                }
+              }
+              ><BiMinus />
             </button>
           </div>
         </div>
