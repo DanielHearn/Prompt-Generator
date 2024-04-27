@@ -40,6 +40,7 @@ export const Words = () => {
           onReorder={(newWords) => {
             dispatch(setWords({ words: newWords }))
           }}
+          key={words.length.toString()}
         >
           {words.map((word, i) => (
             <Word word={word} key={word.value} />
