@@ -1,16 +1,16 @@
-"use client";
-import { useState, cloneElement, useRef, useEffect } from "react";
-import type { ReactElement} from 'react'
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+'use client'
+import { useState, cloneElement, useRef, useEffect } from 'react'
+import type { ReactElement } from 'react'
+import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 
-export const Dropdown = (props: { menu: ReactElement[], activeIndex: number }) => {
-  const { menu, activeIndex } = props;
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+export const Dropdown = (props: { menu: ReactElement[]; activeIndex: number }) => {
+  const { menu, activeIndex } = props
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
   const handleOpen = () => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
   useEffect(() => {
     const clickOutside = (e: any) => {
@@ -26,18 +26,28 @@ export const Dropdown = (props: { menu: ReactElement[], activeIndex: number }) =
     }
   }, [ref, open])
 
-  
   return (
     <div className="dropdown relative" ref={ref}>
-      <button onClick={handleOpen} className="p-4 hover:bg-gray-600 user-">{!open ? <BiChevronDown className="pointer-events-none"/> : <BiChevronUp className="pointer-events-none"/>}</button>
+      <button onClick={handleOpen} className="p-4 hover:bg-gray-600 user-">
+        {!open ? (
+          <BiChevronDown className="pointer-events-none" />
+        ) : (
+          <BiChevronUp className="pointer-events-none" />
+        )}
+      </button>
       {open ? (
         <ul className="dropdown_menu absolute">
           {menu.map((menuItem, index) => (
-            <li key={index} className={`dropdown__item flex bg-slate-600 hover:bg-slate-500 cursor-pointer border-slate-300 ${activeIndex === index && 'border-l-4'}`}>
+            <li
+              key={index}
+              className={`dropdown__item flex bg-slate-600 hover:bg-slate-500 cursor-pointer border-slate-300 ${
+                activeIndex === index && 'border-l-4'
+              }`}
+            >
               {cloneElement(menuItem, {
                 onClick: () => {
-                  menuItem.props.onClick();
-                  setOpen(false);
+                  menuItem.props.onClick()
+                  setOpen(false)
                 },
               })}
             </li>
@@ -45,7 +55,7 @@ export const Dropdown = (props: { menu: ReactElement[], activeIndex: number }) =
         </ul>
       ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default Dropdown;
+export default Dropdown

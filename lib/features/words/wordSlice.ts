@@ -1,19 +1,24 @@
-import { createAppSlice } from "@/lib/createAppSlice";
+import { createAppSlice } from '@/lib/createAppSlice'
 import { NOUNS, VERBS, ADJECTIVES, LOCATIONS } from '../../words'
 
-export enum WORD_TYPES { 'VERB', 'NOUN', 'ADJECTIVE', 'LOCATION' }
+export enum WORD_TYPES {
+  'VERB',
+  'NOUN',
+  'ADJECTIVE',
+  'LOCATION',
+}
 
 export type word = {
-  type: WORD_TYPES,
-  value: string,
-  locked: boolean,
-  id: string,
+  type: WORD_TYPES
+  value: string
+  locked: boolean
+  id: string
 }
 
 export type words = word[]
 
 export interface WordSliceState {
-  words: words;
+  words: words
 }
 
 export const wordTypeMap = {
@@ -31,7 +36,7 @@ export const wordTypeNames = {
 }
 
 const randomIndexFromArray = (max: number) => {
-  return Math.floor(Math.random()*max)
+  return Math.floor(Math.random() * max)
 }
 
 const generateSlug = () => Math.random().toString(16).slice(2)
@@ -42,9 +47,9 @@ const generateWord = (type: WORD_TYPES): word => {
     type,
     value: value || '',
     locked: false,
-    id: generateSlug()
+    id: generateSlug(),
   }
-} 
+}
 
 const generateDefaultWords = (): words => {
   const wordTypes = [WORD_TYPES.ADJECTIVE, WORD_TYPES.NOUN, WORD_TYPES.LOCATION]
@@ -54,12 +59,11 @@ const generateDefaultWords = (): words => {
 
 const initialState: WordSliceState = {
   words: generateDefaultWords(),
-};
-
+}
 
 // If you are not using async thunks you can use the standalone `createSlice`.
 export const wordSlice = createAppSlice({
-  name: "counter",
+  name: 'counter',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
@@ -80,32 +84,36 @@ export const wordSlice = createAppSlice({
       const { words } = action.payload
       state.words = words
     }),
-    regenerateWord: create.reducer((state, action: { payload: {word: word, id: string} }) => {
+    regenerateWord: create.reducer((state, action: { payload: { word: word; id: string } }) => {
       const { word, id } = action.payload
       const newWord = generateWord(word.type)
       newWord.locked = word.locked
       const newWords = state.words.slice()
-      const index = newWords.findIndex(item => item.id === id)
+      const index = newWords.findIndex((item) => item.id === id)
       newWords[index] = newWord
       state.words = newWords.slice()
     }),
-    lockWord: create.reducer((state, action: { payload: { word: word, id: string, value: boolean } }) => {
-      const { word, id, value } = action.payload
-      const newWord = {...word}
-      newWord.locked = value
-      const newWords = state.words.slice()
-      const index = newWords.findIndex(item => item.id === id)
-      newWords[index] = newWord
-      state.words = newWords.slice()
-    }),
-    changeWordType: create.reducer((state, action: { payload: { id: string, value: WORD_TYPES } }) => {
-      const { id, value } = action.payload
-      const newWord = generateWord(value)
-      const newWords = state.words.slice()
-      const index = newWords.findIndex(item => item.id === id)
-      newWords[index] = newWord
-      state.words = newWords.slice()
-    }),
+    lockWord: create.reducer(
+      (state, action: { payload: { word: word; id: string; value: boolean } }) => {
+        const { word, id, value } = action.payload
+        const newWord = { ...word }
+        newWord.locked = value
+        const newWords = state.words.slice()
+        const index = newWords.findIndex((item) => item.id === id)
+        newWords[index] = newWord
+        state.words = newWords.slice()
+      },
+    ),
+    changeWordType: create.reducer(
+      (state, action: { payload: { id: string; value: WORD_TYPES } }) => {
+        const { id, value } = action.payload
+        const newWord = generateWord(value)
+        const newWords = state.words.slice()
+        const index = newWords.findIndex((item) => item.id === id)
+        newWords[index] = newWord
+        state.words = newWords.slice()
+      },
+    ),
     addWord: create.reducer((state) => {
       const newWord = generateWord(WORD_TYPES.NOUN)
       const newWords = state.words.slice()
@@ -115,7 +123,7 @@ export const wordSlice = createAppSlice({
     removeWord: create.reducer((state, action: { payload: { id: string } }) => {
       const { id } = action.payload
       const newWords = state.words.slice()
-      const index = newWords.findIndex(item => item.id === id)
+      const index = newWords.findIndex((item) => item.id === id)
       newWords.splice(index, 1)
       state.words = newWords.slice()
     }),
@@ -125,11 +133,19 @@ export const wordSlice = createAppSlice({
   selectors: {
     selectWords: (counter) => counter.words,
   },
-});
+})
 
 // Action creators are generated for each case reducer function.
-export const {generateWords, regenerateWord, lockWord, changeWordType, setWords, addWord, removeWord, resetWords } =
-  wordSlice.actions;
+export const {
+  generateWords,
+  regenerateWord,
+  lockWord,
+  changeWordType,
+  setWords,
+  addWord,
+  removeWord,
+  resetWords,
+} = wordSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectWords } = wordSlice.selectors;
+export const { selectWords } = wordSlice.selectors
