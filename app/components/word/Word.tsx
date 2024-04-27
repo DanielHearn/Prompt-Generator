@@ -61,10 +61,13 @@ export const Word = (props: { word: wordType }) => {
               <BiRefresh />
             </button>
             <button
-              className="p-4 hover:bg-gray-600"
+              className={`p-4 ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
               onClick={() => {
-                dispatch(removeWord({ id: word.id }))
+                if (!word.locked) {
+                  dispatch(removeWord({ id: word.id }))
+                }
               }}
+              disabled={word.locked}
             >
               <BiMinus />
             </button>
