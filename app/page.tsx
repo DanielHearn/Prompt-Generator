@@ -9,7 +9,7 @@ export default function Home() {
         <h2 className="text-l">Generate prompts for creative usage such as drawing, 3D modeling or AI</h2>
       </div>
       <Words />
-      <div>Developed by <a href="https://www.danielhearn.co.uk">Daniel Hearn</a></div>
+      <div>Developed by <a href="https://www.danielhearn.co.uk" className="text-blue-600 hover:underline">Daniel Hearn</a></div>
     </main>
   );
 }
