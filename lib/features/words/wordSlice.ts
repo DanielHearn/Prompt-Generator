@@ -12,7 +12,7 @@ export type word = {
 
 export type words = word[]
 
-export interface CounterSliceState {
+export interface WordSliceState {
   words: words;
 }
 
@@ -38,7 +38,6 @@ const generateSlug = () => Math.random().toString(16).slice(2)
 
 const generateWord = (type: WORD_TYPES): word => {
   const value = wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
-  console.log(type, value, randomIndexFromArray(wordTypeMap[type].length))
   return {
     type,
     value: value || '',
@@ -53,13 +52,13 @@ const generateDefaultWords = (): words => {
   return wordTypes.map((type) => generateWord(type))
 }
 
-const initialState: CounterSliceState = {
+const initialState: WordSliceState = {
   words: generateDefaultWords(),
 };
 
 
 // If you are not using async thunks you can use the standalone `createSlice`.
-export const counterSlice = createAppSlice({
+export const wordSlice = createAppSlice({
   name: "counter",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
@@ -114,7 +113,7 @@ export const counterSlice = createAppSlice({
 
 // Action creators are generated for each case reducer function.
 export const {generateWords, regenerateWord, lockWord, changeWordType, setWords } =
-  counterSlice.actions;
+  wordSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectWords } = counterSlice.selectors;
+export const { selectWords } = wordSlice.selectors;

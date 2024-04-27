@@ -4,10 +4,10 @@ import {
   lockWord,
   changeWordType,
   wordTypeNames
-} from "@/lib/features/counter/counterSlice";
+} from "@/lib/features/words/wordSlice";
 import type {
   word as wordType
-} from "@/lib/features/counter/counterSlice";
+} from "@/lib/features/words/wordSlice";
 import { BiLock,  BiLockOpen, BiRefresh, BiDotsVerticalRounded } from "react-icons/bi";
 import { useAppDispatch } from "@/lib/hooks";
 import Dropdown from "../dropdown/Dropdown";

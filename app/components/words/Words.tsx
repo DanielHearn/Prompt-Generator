@@ -3,7 +3,7 @@ import {
   generateWords,
   selectWords,
   setWords
-} from "@/lib/features/counter/counterSlice";
+} from "@/lib/features/words/wordSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Word from '../word/Word'
 import { Reorder } from "framer-motion"
