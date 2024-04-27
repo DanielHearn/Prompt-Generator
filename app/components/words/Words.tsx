@@ -15,8 +15,21 @@ export const Words = () => {
   const dispatch = useAppDispatch()
   const words = useAppSelector(selectWords)
 
+  const formattedWord = words
+    .map((word, i) => {
+      let formatted = word.value
+      if (i === 0) {
+        return formatted[0].toUpperCase() + formatted.substring(1)
+      }
+      return formatted
+    })
+    .join(' ')
+
   return (
     <div className="flex flex-col">
+      <div className="flex flex-row gap-2 mb-8 items-center justify-center text-xl">
+        {formattedWord}
+      </div>
       <div className="flex flex-row gap-2">
         <Reorder.Group
           className="flex flex-row gap-4"
