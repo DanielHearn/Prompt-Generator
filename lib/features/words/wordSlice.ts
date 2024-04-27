@@ -19,6 +19,7 @@ export type words = word[]
 
 export interface WordSliceState {
   words: words
+  history: string[]
 }
 
 export const wordTypeMap = {
@@ -57,8 +58,30 @@ const generateDefaultWords = (): words => {
   return wordTypes.map((type) => generateWord(type))
 }
 
+const formatSentence = (words: words) => {
+  return words
+    .map((word, i) => {
+      let formatted = word.value
+      if (i === 0) {
+        return formatted[0].toUpperCase() + formatted.substring(1)
+      }
+      return formatted
+    })
+    .join(' ')
+}
+
+const addWordToHistory = (state: any, words: words) => {
+  const newHistoryItem = formatSentence(words)
+  const newHistory = state.history.slice()
+  newHistory.push(newHistoryItem)
+  state.history = newHistory.slice()
+}
+
+const initialWords = generateDefaultWords()
+
 const initialState: WordSliceState = {
-  words: generateDefaultWords(),
+  words: initialWords,
+  history: [formatSentence(initialWords)],
 }
 
 // If you are not using async thunks you can use the standalone `createSlice`.
@@ -76,13 +99,17 @@ export const wordSlice = createAppSlice({
         }
         return word
       })
+      addWordToHistory(state, state.words)
     }),
     resetWords: create.reducer((state) => {
       state.words = generateDefaultWords()
+      console.log(state.words)
+      addWordToHistory(state, state.words)
     }),
     setWords: create.reducer((state, action: { payload: { words: words } }) => {
       const { words } = action.payload
       state.words = words
+      addWordToHistory(state, state.words)
     }),
     regenerateWord: create.reducer((state, action: { payload: { word: word; id: string } }) => {
       const { word, id } = action.payload
@@ -92,6 +119,7 @@ export const wordSlice = createAppSlice({
       const index = newWords.findIndex((item) => item.id === id)
       newWords[index] = newWord
       state.words = newWords.slice()
+      addWordToHistory(state, state.words)
     }),
     lockWord: create.reducer(
       (state, action: { payload: { word: word; id: string; value: boolean } }) => {
@@ -112,6 +140,7 @@ export const wordSlice = createAppSlice({
         const index = newWords.findIndex((item) => item.id === id)
         newWords[index] = newWord
         state.words = newWords.slice()
+        addWordToHistory(state, state.words)
       },
     ),
     addWord: create.reducer((state) => {
@@ -119,6 +148,7 @@ export const wordSlice = createAppSlice({
       const newWords = state.words.slice()
       newWords.push(newWord)
       state.words = newWords.slice()
+      addWordToHistory(state, state.words)
     }),
     removeWord: create.reducer((state, action: { payload: { id: string } }) => {
       const { id } = action.payload
@@ -126,12 +156,14 @@ export const wordSlice = createAppSlice({
       const index = newWords.findIndex((item) => item.id === id)
       newWords.splice(index, 1)
       state.words = newWords.slice()
+      addWordToHistory(state, state.words)
     }),
   }),
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
   selectors: {
     selectWords: (counter) => counter.words,
+    selectHistory: (counter) => counter.history,
   },
 })
 
@@ -148,4 +180,4 @@ export const {
 } = wordSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectWords } = wordSlice.selectors
+export const { selectWords, selectHistory } = wordSlice.selectors

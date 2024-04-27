@@ -2,6 +2,7 @@
 import {
   generateWords,
   selectWords,
+  selectHistory,
   setWords,
   addWord,
   resetWords,
@@ -14,8 +15,9 @@ import { BiPlus } from 'react-icons/bi'
 export const Words = () => {
   const dispatch = useAppDispatch()
   const words = useAppSelector(selectWords)
+  const history = useAppSelector(selectHistory)
 
-  const formattedWord = words
+  const formattedSentence = words
     .map((word, i) => {
       let formatted = word.value
       if (i === 0) {
@@ -26,11 +28,11 @@ export const Words = () => {
     .join(' ')
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col justify-center items-center">
       <div className="flex flex-row gap-2 mb-8 items-center justify-center text-xl">
-        {formattedWord}
+        {formattedSentence}
       </div>
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 items-center justify-center">
         <Reorder.Group
           className="flex flex-row gap-4"
           axis="x"
@@ -64,6 +66,16 @@ export const Words = () => {
         >
           Reset to Default
         </button>
+      </div>
+      <div className="flex flex-col items-center justify-center gap-2 mt-8 mb-2 ml-0 mr-0 w-screen bg-gray-200 overflow-hidden">
+        <h4 className="text-xl">Prompt History</h4>
+        <ul className="flex flex-col gap-2 overflow-auto h-80">
+          {history.toReversed().map((sentence) => (
+            <li key={sentence}>
+              <p>{sentence}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )
