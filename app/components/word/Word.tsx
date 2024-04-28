@@ -46,6 +46,7 @@ export const Word = (props: { word: wordType }) => {
               onClick={() => {
                 dispatch(lockWord({ word, id: word.id, value: !word.locked }))
               }}
+              title={word.locked ? 'Lock Word' : 'Unlock Word'}
             >
               {word.locked ? <BiLock /> : <BiLockOpen />}
             </button>
@@ -57,6 +58,7 @@ export const Word = (props: { word: wordType }) => {
                 }
               }}
               disabled={word.locked}
+              title={'Regenerate Word'}
             >
               <BiRefresh />
             </button>
@@ -68,6 +70,7 @@ export const Word = (props: { word: wordType }) => {
                 }
               }}
               disabled={word.locked}
+              title={'Remove Word'}
             >
               <BiMinus />
             </button>

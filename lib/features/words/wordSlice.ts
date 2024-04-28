@@ -158,6 +158,9 @@ export const wordSlice = createAppSlice({
       state.words = newWords.slice()
       addWordToHistory(state, state.words)
     }),
+    resetHistory: create.reducer((state) => {
+      state.history = []
+    }),
   }),
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
@@ -177,6 +180,7 @@ export const {
   addWord,
   removeWord,
   resetWords,
+  resetHistory,
 } = wordSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.

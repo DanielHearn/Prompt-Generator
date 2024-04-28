@@ -6,11 +6,13 @@ import {
   setWords,
   addWord,
   resetWords,
+  resetHistory,
 } from '@/lib/features/words/wordSlice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import Word from '../word/Word'
 import { Reorder } from 'framer-motion'
 import { BiPlus } from 'react-icons/bi'
+import { primaryButtonStyle, secondaryButtonStyle } from '../../styles'
 
 export const Words = () => {
   const dispatch = useAppDispatch()
@@ -34,7 +36,7 @@ export const Words = () => {
       </div>
       <div className="flex flex-row gap-2 items-center justify-center">
         <Reorder.Group
-          className="flex flex-row gap-4"
+          className="flex flex-row gap-4 flex-wrap"
           axis="x"
           values={words}
           onReorder={(newWords) => {
@@ -48,29 +50,25 @@ export const Words = () => {
         </Reorder.Group>
       </div>
       <div className="flex flex-row items-center justify-center gap-2 mt-48 mb-2 ml-0 mr-0">
-        <button
-          className="p-4 disabled:opacity-75 text-white bg-gray-700 hover:bg-gray-600 rounded-md overflow-hidden"
-          onClick={() => dispatch(generateWords())}
-        >
+        <button className={primaryButtonStyle} onClick={() => dispatch(generateWords())}>
           Regenerate Words
         </button>
-        <button
-          className="p-4 flex flex-row items-center disabled:opacity-75 text-white bg-gray-700 hover:bg-gray-600 rounded-md overflow-hidden"
-          onClick={() => dispatch(addWord())}
-        >
+        <button className={primaryButtonStyle} onClick={() => dispatch(addWord())}>
           <BiPlus className="pointer-events-none" />
           Add Word
         </button>
-        <button
-          className="p-4 flex flex-row items-center disabled:opacity-75 text-white bg-gray-700 hover:bg-gray-600 rounded-md overflow-hidden"
-          onClick={() => dispatch(resetWords())}
-        >
+        <button className={secondaryButtonStyle} onClick={() => dispatch(resetWords())}>
           Reset to Default
         </button>
       </div>
-      <div className="flex flex-col items-center justify-center gap-2 mt-8 mb-2 ml-0 mr-0 w-screen bg-gray-200 overflow-hidden">
-        <h4 className="text-xl">Prompt History</h4>
-        <ul className="flex flex-col gap-2 overflow-auto h-80">
+      <div className="flex flex-col items-center justify-center gap-2 mt-8 mb-2 ml-0 mr-0 w-full max-w-4xl bg-gray-100 rounded-md overflow-hidden">
+        <div className="flex flex-row items-center place-content-between p-4 bg-gray-300 w-full">
+          <h4 className="text-xl">Prompt History</h4>
+          <button className={secondaryButtonStyle} onClick={() => dispatch(resetHistory())}>
+            Reset History
+          </button>
+        </div>
+        <ul className="flex flex-col gap-2 overflow-auto h-80 w-full p-4">
           {history.toReversed().map((sentence) => (
             <li key={sentence}>
               <p>{sentence}</p>
