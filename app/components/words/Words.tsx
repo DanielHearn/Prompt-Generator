@@ -13,11 +13,14 @@ import Word from '../word/Word'
 import { Reorder } from 'framer-motion'
 import { BiPlus } from 'react-icons/bi'
 import { primaryButtonStyle, secondaryButtonStyle } from '../../styles'
+import { useEffect } from 'react'
+import { selectMobile, setMobile } from '@/lib/features/words/metaSlice'
 
 export const Words = () => {
   const dispatch = useAppDispatch()
   const words = useAppSelector(selectWords)
   const history = useAppSelector(selectHistory)
+  const mobile = useAppSelector(selectMobile)
 
   const formattedSentence = words
     .map((word, i) => {
@@ -29,27 +32,53 @@ export const Words = () => {
     })
     .join(' ')
 
+  useEffect(() => {
+    const resize = () => {
+      if (window.innerWidth < 700) {
+        dispatch(setMobile(true))
+      } else {
+        dispatch(setMobile(false))
+      }
+    }
+
+    window.addEventListener('resize', resize)
+
+    return () => {
+      window.removeEventListener('resize', resize)
+    }
+  }, [dispatch])
+
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex flex-row gap-2 mb-8 items-center justify-center text-xl">
+      <div className="flex flex-row gap-2 mb-8 mt-6 items-center justify-center text-xl">
         {formattedSentence}
       </div>
-      <div className="flex flex-row gap-2 items-center justify-center">
-        <Reorder.Group
-          className="flex flex-row gap-4 flex-wrap"
-          axis="x"
-          values={words}
-          onReorder={(newWords) => {
-            dispatch(setWords({ words: newWords }))
-          }}
-          key={words.length.toString()}
-        >
-          {words.map((word, i) => (
-            <Word word={word} key={word.value} />
-          ))}
-        </Reorder.Group>
+      <div
+        className={`flex flex-row pt-8 w-screen bg-gray-100 justify-center ${
+          !mobile && 'h-96 overflow-hidden'
+        }`}
+      >
+        <div className="overflow-auto pl-8">
+          <Reorder.Group
+            className={`flex ${mobile ? 'flex-col gap-4' : 'flex-row'}`}
+            axis={mobile ? 'y' : 'x'}
+            values={words}
+            onReorder={(newWords) => {
+              dispatch(setWords({ words: newWords }))
+            }}
+            key={`${mobile}_${words.length.toString()}`}
+          >
+            {words.map((word, i) => (
+              <Word word={word} key={word.value} />
+            ))}
+          </Reorder.Group>
+        </div>
       </div>
-      <div className="flex flex-row items-center justify-center gap-2 mt-48 mb-2 ml-0 mr-0">
+      <div
+        className={`flex flex-row flex-wrap items-center justify-center gap-2 ${
+          mobile ? 'mt-8' : 'mt-48'
+        } mb-2 ml-0 mr-0`}
+      >
         <button className={primaryButtonStyle} onClick={() => dispatch(generateWords())}>
           Regenerate Words
         </button>

@@ -19,7 +19,7 @@ export const Word = (props: { word: wordType }) => {
 
   return (
     <Reorder.Item key={word.id} value={word} dragListener={false} dragControls={controls}>
-      <div className="word flex flex-row bg-gray-700 text-white rounded-md">
+      <div className="word flex flex-row bg-gray-700 text-white rounded-md mr-2 ml-2">
         <div
           className="flex p-4 items-center bg-slate-600 rounded-bl-md rounded-tl-md cursor-pointer reorder-handle"
           onPointerDown={(e) => controls.start(e)}

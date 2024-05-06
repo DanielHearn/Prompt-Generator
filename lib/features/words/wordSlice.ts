@@ -86,7 +86,7 @@ const initialState: WordSliceState = {
 
 // If you are not using async thunks you can use the standalone `createSlice`.
 export const wordSlice = createAppSlice({
-  name: 'counter',
+  name: 'word',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
@@ -165,8 +165,8 @@ export const wordSlice = createAppSlice({
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
   selectors: {
-    selectWords: (counter) => counter.words,
-    selectHistory: (counter) => counter.history,
+    selectWords: (state) => state.words,
+    selectHistory: (state) => state.history,
   },
 })
 
