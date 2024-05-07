@@ -5,7 +5,7 @@ export interface MetaSliceState {
 }
 
 const initialState: MetaSliceState = {
-  mobile: window.innerWidth < 700,
+  mobile: typeof window !== 'undefined' ? window.innerWidth < 700 : false,
 }
 
 // If you are not using async thunks you can use the standalone `createSlice`.

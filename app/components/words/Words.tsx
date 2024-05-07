@@ -13,7 +13,7 @@ import Word from '../word/Word'
 import { Reorder } from 'framer-motion'
 import { BiPlus } from 'react-icons/bi'
 import { primaryButtonStyle, secondaryButtonStyle } from '../../styles'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { selectMobile, setMobile } from '@/lib/features/words/metaSlice'
 
 export const Words = () => {
@@ -47,6 +47,12 @@ export const Words = () => {
       window.removeEventListener('resize', resize)
     }
   }, [dispatch])
+
+  const orderedHistory = useMemo(() => {
+    const tempHistory = history.slice()
+    tempHistory.reverse()
+    return tempHistory
+  }, [history])
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -98,7 +104,7 @@ export const Words = () => {
           </button>
         </div>
         <ul className="flex flex-col gap-2 overflow-auto h-80 w-full p-4">
-          {history.toReversed().map((sentence) => (
+          {orderedHistory.map((sentence) => (
             <li key={sentence}>
               <p>{sentence}</p>
             </li>
