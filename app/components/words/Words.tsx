@@ -15,6 +15,7 @@ import { BiPlus } from 'react-icons/bi'
 import { primaryButtonStyle, secondaryButtonStyle } from '../../styles'
 import { useEffect, useMemo } from 'react'
 import { selectMobile, setMobile } from '@/lib/features/words/metaSlice'
+import type { word as wordType } from '@/lib/features/words/wordSlice'
 
 export const Words = () => {
   const dispatch = useAppDispatch()
@@ -75,7 +76,26 @@ export const Words = () => {
             key={`${mobile}_${words.length.toString()}`}
           >
             {words.map((word, i) => (
-              <Word word={word} key={word.value} />
+              <Word
+                word={word}
+                key={word.value}
+                index={i}
+                totalLength={words.length}
+                onMove={(up: boolean) => {
+                  const newWords = words.slice()
+                  if (up && i > 0) {
+                    const swapWord = newWords[i - 1]
+                    newWords[i - 1] = word
+                    newWords[i] = swapWord
+                    dispatch(setWords({ words: newWords }))
+                  } else if (!up && i < words.length - 1) {
+                    const swapWord = newWords[i + 1]
+                    newWords[i + 1] = word
+                    newWords[i] = swapWord
+                    dispatch(setWords({ words: newWords }))
+                  }
+                }}
+              />
             ))}
           </Reorder.Group>
         </div>

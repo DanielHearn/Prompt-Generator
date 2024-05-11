@@ -7,24 +7,65 @@ import {
   removeWord,
 } from '@/lib/features/words/wordSlice'
 import type { word as wordType } from '@/lib/features/words/wordSlice'
-import { BiLock, BiLockOpen, BiRefresh, BiDotsVerticalRounded, BiMinus } from 'react-icons/bi'
-import { useAppDispatch } from '@/lib/hooks'
+import {
+  BiLock,
+  BiLockOpen,
+  BiRefresh,
+  BiDownArrow,
+  BiUpArrow,
+  BiDotsVerticalRounded,
+  BiMinus,
+} from 'react-icons/bi'
+import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import Dropdown from '../dropdown/Dropdown'
 import { Reorder, useDragControls } from 'framer-motion'
+import { selectMobile } from '@/lib/features/words/metaSlice'
 
-export const Word = (props: { word: wordType }) => {
-  const { word } = props
+export const Word = (props: {
+  word: wordType
+  onMove: (up: boolean) => void
+  index: number
+  totalLength: number
+}) => {
+  const { word, onMove, index, totalLength } = props
   const dispatch = useAppDispatch()
   const controls = useDragControls()
+  const mobile = useAppSelector(selectMobile)
 
   return (
-    <Reorder.Item key={word.id} value={word} dragListener={false} dragControls={controls}>
+    <Reorder.Item
+      key={word.id}
+      value={word}
+      dragListener={false}
+      dragControls={mobile ? undefined : controls}
+    >
       <div className="word flex flex-row bg-gray-700 text-white rounded-md mr-2 ml-2">
         <div
-          className="flex p-4 items-center bg-slate-600 rounded-bl-md rounded-tl-md cursor-pointer reorder-handle"
+          className={`flex flex-col ${
+            mobile ? '' : 'p-4'
+          } items-center bg-slate-600 rounded-bl-md rounded-tl-md cursor-pointer reorder-handle`}
           onPointerDown={(e) => controls.start(e)}
         >
-          <BiDotsVerticalRounded />
+          {mobile ? (
+            <>
+              {index === 0 ? (
+                <div className="flex flex-1 p-4">{''}</div>
+              ) : (
+                <button className="flex flex-1 p-4" onClick={() => onMove(true)}>
+                  <BiUpArrow />
+                </button>
+              )}
+              {index === totalLength - 1 ? (
+                <div className="flex flex-1 p-4">{''}</div>
+              ) : (
+                <button className="flex flex-1 p-4" onClick={() => onMove(false)}>
+                  <BiDownArrow />
+                </button>
+              )}
+            </>
+          ) : (
+            <BiDotsVerticalRounded />
+          )}
         </div>
         <div className="flex flex-col">
           <div className="word__value p-4 select-none">{word.value}</div>
