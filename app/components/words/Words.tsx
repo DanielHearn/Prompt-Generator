@@ -15,7 +15,6 @@ import { BiPlus } from 'react-icons/bi'
 import { primaryButtonStyle, secondaryButtonStyle } from '../../styles'
 import { useEffect, useMemo } from 'react'
 import { selectMobile, setMobile } from '@/lib/features/words/metaSlice'
-import type { word as wordType } from '@/lib/features/words/wordSlice'
 
 export const Words = () => {
   const dispatch = useAppDispatch()
@@ -58,7 +57,7 @@ export const Words = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div
-        className="flex flex-row gap-2 mb-8 mt-6 items-center justify-center text-xl"
+        className="flex flex-row gap-2 mb-8 mt-6 p-4 bg-gray-100 items-center justify-center text-xl"
         suppressHydrationWarning
       >
         {formattedSentence}
@@ -68,7 +67,7 @@ export const Words = () => {
           !mobile && 'h-96 overflow-hidden'
         }`}
       >
-        <div className="overflow-auto pl-8">
+        <div className={!mobile ? 'overflow-auto pl-8' : ''}>
           <Reorder.Group
             className={`flex ${mobile ? 'flex-col gap-4' : 'flex-row'}`}
             axis={mobile ? 'y' : 'x'}
@@ -126,7 +125,9 @@ export const Words = () => {
             Reset History
           </button>
         </div>
-        <ul className="flex flex-col gap-2 overflow-auto h-80 w-full p-4">
+        <ul
+          className={`flex flex-col gap-2 overflow-auto ${mobile ? 'min-h-20' : 'h-80'} w-full p-4`}
+        >
           {orderedHistory.map((sentence) => (
             <li key={sentence}>
               <p suppressHydrationWarning>{sentence}</p>
