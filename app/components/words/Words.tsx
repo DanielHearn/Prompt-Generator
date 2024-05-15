@@ -57,7 +57,10 @@ export const Words = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex flex-row gap-2 mb-8 mt-6 items-center justify-center text-xl">
+      <div
+        className="flex flex-row gap-2 mb-8 mt-6 items-center justify-center text-xl"
+        suppressHydrationWarning
+      >
         {formattedSentence}
       </div>
       <div
@@ -126,7 +129,7 @@ export const Words = () => {
         <ul className="flex flex-col gap-2 overflow-auto h-80 w-full p-4">
           {orderedHistory.map((sentence) => (
             <li key={sentence}>
-              <p>{sentence}</p>
+              <p suppressHydrationWarning>{sentence}</p>
             </li>
           ))}
         </ul>

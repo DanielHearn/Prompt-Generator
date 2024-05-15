@@ -68,7 +68,9 @@ export const Word = (props: {
           )}
         </div>
         <div className="flex flex-col">
-          <div className="word__value p-4 select-none">{word.value}</div>
+          <div className="word__value p-4 select-none" suppressHydrationWarning>
+            {word.value}
+          </div>
           <div className="flex flex-row">
             <Dropdown
               activeIndex={word.type}
