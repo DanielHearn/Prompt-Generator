@@ -64,7 +64,7 @@ export const Words = () => {
       </div>
       <div
         className={`flex flex-row pt-8 w-screen bg-gray-100 justify-center ${
-          !mobile && 'h-96 overflow-hidden'
+          !mobile && 'h-80 overflow-hidden'
         }`}
       >
         <div className={!mobile ? 'overflow-auto pl-8' : ''}>
@@ -103,9 +103,7 @@ export const Words = () => {
         </div>
       </div>
       <div
-        className={`flex flex-row flex-wrap items-center justify-center gap-2 ${
-          mobile ? 'mt-8' : 'mt-48'
-        } mb-2 ml-0 mr-0`}
+        className={`flex flex-row flex-wrap items-center justify-center gap-2 mt-8 mb-2 ml-0 mr-0`}
       >
         <button className={primaryButtonStyle} onClick={() => dispatch(generateWords())}>
           Regenerate Words
