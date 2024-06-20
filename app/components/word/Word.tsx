@@ -5,6 +5,7 @@ import {
   changeWordType,
   wordTypeNames,
   removeWord,
+  WORD_TYPES,
 } from '@/lib/features/words/wordSlice'
 import type { word as wordType } from '@/lib/features/words/wordSlice'
 import {
@@ -103,6 +104,34 @@ export const Word = (props: {
             >
               <BiRefresh />
             </button>
+            {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
+              <button
+                className={`p-4 text-xs ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+                onClick={() => {
+                  if (!word.locked) {
+                    dispatch(regenerateWord({ word, id: word.id, refreshAdjective: true }))
+                  }
+                }}
+                disabled={word.locked}
+                title={'Regenerate Adjective'}
+              >
+                Regen Adjective
+              </button>
+            )}
+            {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
+              <button
+                className={`p-4 text-xs ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+                onClick={() => {
+                  if (!word.locked) {
+                    dispatch(regenerateWord({ word, id: word.id, refreshLocation: true }))
+                  }
+                }}
+                disabled={word.locked}
+                title={'Regenerate Location'}
+              >
+                Regen Location
+              </button>
+            )}
             <button
               className={`p-4 ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
               onClick={() => {

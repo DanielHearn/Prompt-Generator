@@ -36,7 +36,10 @@ export const Dropdown = (props: { menu: ReactElement[]; activeIndex: number }) =
         )}
       </button>
       {open ? (
-        <ul className="dropdown_menu absolute z-50 rounded-md rounded-tr-none rounded-tl-none drop-shadow-md overflow-hidden">
+        <ul
+          className="dropdown_menu absolute z-50 rounded-md rounded-tr-none rounded-tl-none drop-shadow-md overflow-hidden"
+          style={{ width: '200px' }}
+        >
           {menu.map((menuItem, index) => (
             <li
               key={index}

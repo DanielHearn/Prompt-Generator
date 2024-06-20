@@ -1,18 +1,21 @@
 import { createAppSlice } from '@/lib/createAppSlice'
-import { NOUNS, VERBS, ADJECTIVES, LOCATIONS } from '../../words'
+import { NOUNS, VERBS, ADJECTIVES, LOCATIONS, LOCATIONS_WITH_ADJECTIVE } from '../../words'
 
 export enum WORD_TYPES {
   'VERB',
   'NOUN',
   'ADJECTIVE',
   'LOCATION',
+  'ADJECTIVE_AND_LOCATION',
 }
 
 export type word = {
   type: WORD_TYPES
   value: string
+  raw_value: string
   locked: boolean
   id: string
+  adjective: string
 }
 
 export type words = word[]
@@ -27,6 +30,7 @@ export const wordTypeMap = {
   [WORD_TYPES.NOUN]: NOUNS,
   [WORD_TYPES.ADJECTIVE]: ADJECTIVES,
   [WORD_TYPES.LOCATION]: LOCATIONS,
+  [WORD_TYPES.ADJECTIVE_AND_LOCATION]: LOCATIONS_WITH_ADJECTIVE,
 }
 
 export const wordTypeNames = {
@@ -34,6 +38,7 @@ export const wordTypeNames = {
   [WORD_TYPES.NOUN]: 'Nouns',
   [WORD_TYPES.ADJECTIVE]: 'Adjectives',
   [WORD_TYPES.LOCATION]: 'Locations',
+  [WORD_TYPES.ADJECTIVE_AND_LOCATION]: 'Location with adjective',
 }
 
 const randomIndexFromArray = (max: number) => {
@@ -42,13 +47,29 @@ const randomIndexFromArray = (max: number) => {
 
 const generateSlug = () => Math.random().toString(16).slice(2)
 
-const generateWord = (type: WORD_TYPES): word => {
-  const value = wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
+const generateWord = (
+  type: WORD_TYPES,
+  options: { baseWord?: string; adjective?: string } = {},
+): word => {
+  const { baseWord, adjective: baseAdjective } = options
+  let value = baseWord || wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
+  let rawValue = value
+  let adjective = ''
+
+  if (type === WORD_TYPES.ADJECTIVE_AND_LOCATION) {
+    adjective =
+      baseAdjective ||
+      wordTypeMap[WORD_TYPES.ADJECTIVE][randomIndexFromArray(wordTypeMap[type].length)]
+    value = value?.replace('{ADJECTIVE}', adjective)
+  }
+
   return {
     type,
     value: value || '',
+    raw_value: rawValue || '',
     locked: false,
     id: generateSlug(),
+    adjective: adjective,
   }
 }
 
@@ -103,7 +124,6 @@ export const wordSlice = createAppSlice({
     }),
     resetWords: create.reducer((state) => {
       state.words = generateDefaultWords()
-      console.log(state.words)
       addWordToHistory(state, state.words)
     }),
     setWords: create.reducer((state, action: { payload: { words: words } }) => {
@@ -111,16 +131,30 @@ export const wordSlice = createAppSlice({
       state.words = words
       addWordToHistory(state, state.words)
     }),
-    regenerateWord: create.reducer((state, action: { payload: { word: word; id: string } }) => {
-      const { word, id } = action.payload
-      const newWord = generateWord(word.type)
-      newWord.locked = word.locked
-      const newWords = state.words.slice()
-      const index = newWords.findIndex((item) => item.id === id)
-      newWords[index] = newWord
-      state.words = newWords.slice()
-      addWordToHistory(state, state.words)
-    }),
+    regenerateWord: create.reducer(
+      (
+        state,
+        action: {
+          payload: { word: word; id: string; refreshAdjective?: boolean; refreshLocation?: boolean }
+        },
+      ) => {
+        const { word, id, refreshAdjective, refreshLocation } = action.payload
+        let newWord = null
+        if (refreshAdjective) {
+          newWord = generateWord(word.type, { baseWord: word.raw_value })
+        } else if (refreshLocation) {
+          newWord = generateWord(word.type, { adjective: word.adjective })
+        } else {
+          newWord = generateWord(word.type)
+        }
+        newWord.locked = word.locked
+        const newWords = state.words.slice()
+        const index = newWords.findIndex((item) => item.id === id)
+        newWords[index] = newWord
+        state.words = newWords.slice()
+        addWordToHistory(state, state.words)
+      },
+    ),
     lockWord: create.reducer(
       (state, action: { payload: { word: word; id: string; value: boolean } }) => {
         const { word, id, value } = action.payload

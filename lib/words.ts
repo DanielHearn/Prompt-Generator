@@ -335,6 +335,28 @@ export const LOCATIONS = [
   'in a fjord',
 ]
 
+export const LOCATIONS_WITH_ADJECTIVE = [
+  'in a {ADJECTIVE} forest',
+  'on a {ADJECTIVE} beach',
+  'on a {ADJECTIVE} mountain',
+  'beside a {ADJECTIVE} river',
+  'in a {ADJECTIVE} desert',
+  'in a {ADJECTIVE} valley',
+  'in a {ADJECTIVE} city',
+  'in a {ADJECTIVE} village',
+  'on an {ADJECTIVE} island',
+  'on a {ADJECTIVE} lake',
+  'beside a {ADJECTIVE} waterfall',
+  'in a {ADJECTIVE} canyon',
+  'on a {ADJECTIVE} plain',
+  'on a {ADJECTIVE} hill',
+  'on a {ADJECTIVE} glacier',
+  'on a {ADJECTIVE} volcano',
+  'in an {ADJECTIVE} oasis',
+  'in a {ADJECTIVE} marsh',
+  'in a {ADJECTIVE} fjord',
+]
+
 export const ADJECTIVES = [
   'colorful',
   'vibrant',

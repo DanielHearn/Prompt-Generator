@@ -64,7 +64,7 @@ export const Words = () => {
       </div>
       <div
         className={`flex flex-row pt-8 w-screen bg-gray-100 justify-center ${
-          !mobile && 'h-80 overflow-hidden'
+          !mobile && 'h-96 overflow-hidden'
         }`}
       >
         <div className={!mobile ? 'overflow-auto pl-8' : ''}>
@@ -126,8 +126,8 @@ export const Words = () => {
         <ul
           className={`flex flex-col gap-2 overflow-auto ${mobile ? 'min-h-20' : 'h-80'} w-full p-4`}
         >
-          {orderedHistory.map((sentence) => (
-            <li key={sentence}>
+          {orderedHistory.map((sentence, i) => (
+            <li key={`${sentence}_${i}`}>
               <p suppressHydrationWarning>{sentence}</p>
             </li>
           ))}
