@@ -34,10 +34,10 @@ export const wordTypeMap = {
 }
 
 export const wordTypeNames = {
-  [WORD_TYPES.VERB]: 'Verbs',
-  [WORD_TYPES.NOUN]: 'Nouns',
-  [WORD_TYPES.ADJECTIVE]: 'Adjectives',
-  [WORD_TYPES.LOCATION]: 'Locations',
+  [WORD_TYPES.VERB]: 'Verb',
+  [WORD_TYPES.NOUN]: 'Noun',
+  [WORD_TYPES.ADJECTIVE]: 'Adjective',
+  [WORD_TYPES.LOCATION]: 'Location',
   [WORD_TYPES.ADJECTIVE_AND_LOCATION]: 'Location with adjective',
 }
 
