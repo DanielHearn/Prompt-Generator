@@ -67,9 +67,9 @@ export const Words = () => {
           !mobile && 'h-96 overflow-hidden'
         }`}
       >
-        <div className={!mobile ? 'overflow-auto pl-8' : ''}>
+        <div className={!mobile ? 'overflow-auto pl-8 w-full' : ''}>
           <Reorder.Group
-            className={`flex ${mobile ? 'flex-col gap-4' : 'flex-row'}`}
+            className={`flex ${mobile ? 'flex-col gap-4' : 'flex-row items-center justify-center'}`}
             axis={mobile ? 'y' : 'x'}
             values={words}
             onReorder={(newWords) => {
@@ -124,7 +124,7 @@ export const Words = () => {
           </button>
         </div>
         <ul
-          className={`flex flex-col gap-2 overflow-auto ${mobile ? 'min-h-20' : 'h-80'} w-full p-4`}
+          className={`flex flex-col gap-2 overflow-auto ${mobile ? 'min-h-20' : 'h-64'} w-full p-4`}
         >
           {orderedHistory.map((sentence, i) => (
             <li key={`${sentence}_${i}`}>
