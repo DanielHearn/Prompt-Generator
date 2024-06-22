@@ -70,7 +70,7 @@ export const Word = (props: {
         </div>
         <div className="flex flex-col">
           <div className="word__value p-4 select-none">{word.value}</div>
-          <div className="flex flex-row">
+          <div className="flex flex-row border-solid border-t-2 border-slate-600 bg-gray-700">
             <Dropdown
               activeIndex={word.type}
               menu={Object.values(wordTypeNames).map((name, key) => (
@@ -106,7 +106,9 @@ export const Word = (props: {
             </button>
             {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
               <button
-                className={`p-4 text-xs ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+                className={`flex flex-row items-center p-4 ${
+                  word.locked ? 'bg-gray-800' : `hover:bg-gray-600`
+                }`}
                 onClick={() => {
                   if (!word.locked) {
                     dispatch(regenerateWord({ word, id: word.id, refreshAdjective: true }))
@@ -115,12 +117,14 @@ export const Word = (props: {
                 disabled={word.locked}
                 title={'Regenerate Adjective'}
               >
-                Regen Adjective
+                <BiRefresh /> Adjective
               </button>
             )}
             {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
               <button
-                className={`p-4 text-xs ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+                className={`flex flex-row items-center p-4 ${
+                  word.locked ? 'bg-gray-800' : `hover:bg-gray-600`
+                }`}
                 onClick={() => {
                   if (!word.locked) {
                     dispatch(regenerateWord({ word, id: word.id, refreshLocation: true }))
@@ -129,7 +133,7 @@ export const Word = (props: {
                 disabled={word.locked}
                 title={'Regenerate Location'}
               >
-                Regen Location
+                <BiRefresh /> Location
               </button>
             )}
             <button
