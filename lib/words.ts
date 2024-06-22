@@ -471,3 +471,9 @@ export const DETERMINERS = [
   'no',
   'either',
 ]
+
+export const WITH = ['with']
+
+export const A = ['a']
+
+export const AND = ['and']

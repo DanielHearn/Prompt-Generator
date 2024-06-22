@@ -44,7 +44,7 @@ export const Word = (props: {
         <div
           className={`flex flex-col ${
             mobile ? '' : 'p-4'
-          } items-center bg-slate-600 rounded-bl-md rounded-tl-md cursor-pointer reorder-handle`}
+          } items-center justify-center bg-slate-600 rounded-bl-md rounded-tl-md cursor-pointer reorder-handle`}
           onPointerDown={(e) => controls.start(e)}
         >
           {mobile ? (

@@ -1,5 +1,14 @@
 import { createAppSlice } from '@/lib/createAppSlice'
-import { NOUNS, VERBS, ADJECTIVES, LOCATIONS, LOCATIONS_WITH_ADJECTIVE } from '../../words'
+import {
+  NOUNS,
+  VERBS,
+  ADJECTIVES,
+  LOCATIONS,
+  LOCATIONS_WITH_ADJECTIVE,
+  WITH,
+  A,
+  AND,
+} from '../../words'
 
 export enum WORD_TYPES {
   'VERB',
@@ -7,6 +16,9 @@ export enum WORD_TYPES {
   'ADJECTIVE',
   'LOCATION',
   'ADJECTIVE_AND_LOCATION',
+  'WITH',
+  'A',
+  'AND',
 }
 
 export type word = {
@@ -31,6 +43,9 @@ export const wordTypeMap = {
   [WORD_TYPES.ADJECTIVE]: ADJECTIVES,
   [WORD_TYPES.LOCATION]: LOCATIONS,
   [WORD_TYPES.ADJECTIVE_AND_LOCATION]: LOCATIONS_WITH_ADJECTIVE,
+  [WORD_TYPES.WITH]: WITH,
+  [WORD_TYPES.A]: A,
+  [WORD_TYPES.AND]: AND,
 }
 
 export const wordTypeNames = {
@@ -39,6 +54,9 @@ export const wordTypeNames = {
   [WORD_TYPES.ADJECTIVE]: 'Adjective',
   [WORD_TYPES.LOCATION]: 'Location',
   [WORD_TYPES.ADJECTIVE_AND_LOCATION]: 'Location with adjective',
+  [WORD_TYPES.WITH]: 'With',
+  [WORD_TYPES.A]: 'A',
+  [WORD_TYPES.AND]: 'And',
 }
 
 const randomIndexFromArray = (max: number) => {
@@ -52,6 +70,7 @@ const generateWord = (
   options: { baseWord?: string; adjective?: string } = {},
 ): word => {
   const { baseWord, adjective: baseAdjective } = options
+  console.log(wordTypeMap[type].length)
   let value = baseWord || wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
   let rawValue = value
   let adjective = ''
