@@ -93,7 +93,7 @@ const generateWord = (
 }
 
 const generateDefaultWords = (): words => {
-  const wordTypes = [WORD_TYPES.ADJECTIVE, WORD_TYPES.NOUN, WORD_TYPES.LOCATION]
+  const wordTypes = [WORD_TYPES.ADJECTIVE, WORD_TYPES.NOUN, WORD_TYPES.ADJECTIVE_AND_LOCATION]
 
   return wordTypes.map((type) => generateWord(type))
 }

@@ -52,14 +52,14 @@ export const Word = (props: {
               {index === 0 ? (
                 <div className="flex flex-1 p-4">{''}</div>
               ) : (
-                <button className="flex flex-1 p-4" onClick={() => onMove(true)}>
+                <button className="flex flex-1 p-4 select-none" onClick={() => onMove(true)}>
                   <BiUpArrow />
                 </button>
               )}
               {index === totalLength - 1 ? (
                 <div className="flex flex-1 p-4">{''}</div>
               ) : (
-                <button className="flex flex-1 p-4" onClick={() => onMove(false)}>
+                <button className="flex flex-1 p-4 select-none" onClick={() => onMove(false)}>
                   <BiDownArrow />
                 </button>
               )}
@@ -84,7 +84,9 @@ export const Word = (props: {
               ))}
             />
             <button
-              className={`p-4 ${word.locked ? 'bg-red-800 hover:bg-red-700' : `hover:bg-gray-600`}`}
+              className={`p-4 select-none ${
+                word.locked ? 'bg-red-800 hover:bg-red-700' : `hover:bg-gray-600`
+              }`}
               onClick={() => {
                 dispatch(lockWord({ word, id: word.id, value: !word.locked }))
               }}
@@ -93,7 +95,7 @@ export const Word = (props: {
               {word.locked ? <BiLock /> : <BiLockOpen />}
             </button>
             <button
-              className={`p-4 ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+              className={`p-4 select-none ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
               onClick={() => {
                 if (!word.locked) {
                   dispatch(regenerateWord({ word, id: word.id }))
@@ -106,7 +108,7 @@ export const Word = (props: {
             </button>
             {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
               <button
-                className={`flex flex-row items-center p-4 ${
+                className={`flex flex-row items-center p-4 select-none ${
                   word.locked ? 'bg-gray-800' : `hover:bg-gray-600`
                 }`}
                 onClick={() => {
@@ -122,7 +124,7 @@ export const Word = (props: {
             )}
             {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
               <button
-                className={`flex flex-row items-center p-4 ${
+                className={`flex flex-row items-center p-4 select-none ${
                   word.locked ? 'bg-gray-800' : `hover:bg-gray-600`
                 }`}
                 onClick={() => {
@@ -137,7 +139,7 @@ export const Word = (props: {
               </button>
             )}
             <button
-              className={`p-4 ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+              className={`p-4 select-none ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
               onClick={() => {
                 if (!word.locked) {
                   dispatch(removeWord({ id: word.id }))
