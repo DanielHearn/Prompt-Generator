@@ -14,9 +14,13 @@ export default function Home() {
     >
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="text-4xl">Prompt Generator</h1>
-        <h2 className="text-l">
+        <h2 className="text-l max-w-xl">
           Generate prompts for creative usage such as drawing, 3D modeling or AI
         </h2>
+        <h3 className="text-sm max-w-xl">
+          Add new words to the prompt and drag words horizontally to reorder them. Lock individual
+          words to control which get regenerated.
+        </h3>
       </div>
       <Words />
       <div>
