@@ -70,7 +70,10 @@ export const Word = (props: {
         </div>
         <div className="flex flex-col">
           <div className="word__value p-4 select-none">{word.value}</div>
-          <div className="flex flex-row border-solid border-t-2 border-slate-600 bg-gray-700">
+          <div
+            style={mobile ? { maxWidth: '280px', flexWrap: 'wrap' } : {}}
+            className="flex flex-row border-solid border-t-2 border-slate-600 bg-gray-700"
+          >
             <Dropdown
               activeIndex={word.type}
               menu={Object.values(wordTypeNames).map((name, key) => (
