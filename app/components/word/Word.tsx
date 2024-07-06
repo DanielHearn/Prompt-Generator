@@ -90,7 +90,7 @@ export const Word = (props: {
               onClick={() => {
                 dispatch(lockWord({ word, id: word.id, value: !word.locked }))
               }}
-              title={word.locked ? 'Lock Word' : 'Unlock Word'}
+              title={word.locked ? 'Unlock Word' : 'Lock Word'}
             >
               {word.locked ? <BiLock /> : <BiLockOpen />}
             </button>
