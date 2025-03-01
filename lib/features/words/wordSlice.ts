@@ -70,7 +70,6 @@ const generateWord = (
   options: { baseWord?: string; adjective?: string } = {},
 ): word => {
   const { baseWord, adjective: baseAdjective } = options
-  console.log(wordTypeMap[type].length)
   let value = baseWord || wordTypeMap[type][randomIndexFromArray(wordTypeMap[type].length)]
   let rawValue = value
   let adjective = ''

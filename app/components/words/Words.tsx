@@ -13,7 +13,7 @@ import Word from '../word/Word'
 import { Reorder } from 'framer-motion'
 import { BiPlus } from 'react-icons/bi'
 import { primaryButtonStyle, secondaryButtonStyle } from '../../styles'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { selectMobile, setMobile } from '@/lib/features/words/metaSlice'
 
 export const Words = () => {
@@ -21,6 +21,7 @@ export const Words = () => {
   const words = useAppSelector(selectWords)
   const history = useAppSelector(selectHistory)
   const mobile = useAppSelector(selectMobile)
+  const [imageUrl, setImageUrl] = useState(null)
 
   const formattedSentence = words
     .map((word, i) => {
@@ -47,6 +48,23 @@ export const Words = () => {
       window.removeEventListener('resize', resize)
     }
   }, [dispatch])
+
+  async function streamToString(stream) {
+    return await new Response(stream).text()
+  }
+
+  const generateImage = async () => {
+    const uri = await fetch(
+      `https://ai-image-gen-55a.pages.dev/generate_image?prompt=${formattedSentence}`,
+    )
+    const str = await streamToString(uri.body)
+    const obj = JSON.parse(str)
+    setImageUrl(obj.dataURI)
+  }
+
+  useEffect(() => {
+    setImageUrl(null)
+  }, [formattedSentence])
 
   const orderedHistory = useMemo(() => {
     const tempHistory = history.slice()
@@ -115,7 +133,15 @@ export const Words = () => {
         <button className={secondaryButtonStyle} onClick={() => dispatch(resetWords())}>
           Reset to Default
         </button>
+        <button className={secondaryButtonStyle} onClick={() => generateImage()}>
+          Generate Image
+        </button>
       </div>
+      {imageUrl && (
+        <div>
+          <img src={imageUrl} alt="" width="512" height="512" />
+        </div>
+      )}
       <div className="flex flex-col items-center justify-center gap-2 mt-8 mb-2 ml-0 mr-0 w-full max-w-4xl bg-gray-100 rounded-md overflow-hidden">
         <div className="flex flex-row items-center place-content-between p-4 bg-gray-300 w-full">
           <h4 className="text-xl">Prompt History</h4>
