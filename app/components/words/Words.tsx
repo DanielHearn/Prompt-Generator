@@ -49,7 +49,7 @@ export const Words = () => {
     }
   }, [dispatch])
 
-  async function streamToString(stream) {
+  async function streamToString(stream: ReadableStream<Uint8Array>) {
     return await new Response(stream).text()
   }
 
@@ -57,9 +57,11 @@ export const Words = () => {
     const uri = await fetch(
       `https://ai-image-gen-55a.pages.dev/generate_image?prompt=${formattedSentence}`,
     )
-    const str = await streamToString(uri.body)
-    const obj = JSON.parse(str)
-    setImageUrl(obj.dataURI)
+    if (uri.body) {
+      const str = await streamToString(uri.body)
+      const obj = JSON.parse(str)
+      setImageUrl(obj.dataURI)
+    }
   }
 
   useEffect(() => {
