@@ -28,11 +28,14 @@ export const Dropdown = (props: { menu: ReactElement[]; activeIndex: number }) =
 
   return (
     <div className="dropdown relative" ref={ref}>
-      <button onClick={handleOpen} className="p-4 hover:bg-gray-600 user-">
+      <button onClick={handleOpen} className="p-3 hover:bg-gray-600 h-full">
         <BiSliderAlt />
       </button>
       {open ? (
-        <ul className="dropdown_menu absolute z-50 rounded-md rounded-tr-none rounded-tl-none drop-shadow-md w-56 max-h-52 overflow-auto">
+        <ul
+          className="dropdown_menu absolute z-50 rounded-md rounded-tr-none rounded-tl-none drop-shadow-md w-56 max-h-52 overflow-auto"
+          style={{ left: '-32px' }}
+        >
           {menu.map((menuItem, index) => (
             <li
               key={index}
