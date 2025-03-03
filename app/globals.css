@@ -25,3 +25,29 @@ body {
 svg {
   font-size: 20px;
 }
+
+.Loading {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Loading__arc {
+  border: 6px solid rgb(55, 65, 81);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  display: inline-block;
+  min-width: 15px;
+  min-height: 15px;
+  padding: 7.5px;
+  border-radius: 100%;
+  border-bottom-color: transparent;
+  animation: arcLoaderAnim 1.6s linear infinite;
+}
+
+@keyframes arcLoaderAnim {
+  100% {
+    transform: rotate(360deg);
+  }
+}

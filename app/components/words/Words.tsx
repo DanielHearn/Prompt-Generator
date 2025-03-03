@@ -15,6 +15,7 @@ import { BiPlus } from 'react-icons/bi'
 import { primaryButtonStyle, secondaryButtonStyle } from '../../styles'
 import { useEffect, useMemo, useState } from 'react'
 import { selectMobile, setMobile } from '@/lib/features/words/metaSlice'
+import Loading from '../loading/Loading'
 
 export const Words = () => {
   const dispatch = useAppDispatch()
@@ -22,6 +23,7 @@ export const Words = () => {
   const history = useAppSelector(selectHistory)
   const mobile = useAppSelector(selectMobile)
   const [imageUrl, setImageUrl] = useState(null)
+  const [loadingImage, setLoadingImage] = useState(false)
 
   const formattedSentence = words
     .map((word, i) => {
@@ -54,14 +56,18 @@ export const Words = () => {
   }
 
   const generateImage = async () => {
+    setLoadingImage(true)
     const uri = await fetch(
       `https://ai-image-gen-55a.pages.dev/generate_image?prompt=${formattedSentence}`,
     )
     if (uri.body) {
       const str = await streamToString(uri.body)
       const obj = JSON.parse(str)
-      setImageUrl(obj.dataURI)
+      if (obj.dataURI) {
+        setImageUrl(obj.dataURI)
+      }
     }
+    setLoadingImage(false)
   }
 
   useEffect(() => {
@@ -132,14 +138,15 @@ export const Words = () => {
           <BiPlus className="pointer-events-none" />
           Add Word
         </button>
+        <button className={primaryButtonStyle} onClick={() => generateImage()}>
+          Generate Image
+        </button>
         <button className={secondaryButtonStyle} onClick={() => dispatch(resetWords())}>
           Reset to Default
         </button>
-        <button className={secondaryButtonStyle} onClick={() => generateImage()}>
-          Generate Image
-        </button>
       </div>
-      {imageUrl && (
+      {loadingImage && <Loading />}
+      {imageUrl && !loadingImage && (
         <div>
           <img src={imageUrl} alt="" width="512" height="512" />
         </div>
