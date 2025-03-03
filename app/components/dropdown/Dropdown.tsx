@@ -1,7 +1,7 @@
 'use client'
 import { useState, cloneElement, useRef, useEffect } from 'react'
 import type { ReactElement } from 'react'
-import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
+import { BiSliderAlt } from 'react-icons/bi'
 
 export const Dropdown = (props: { menu: ReactElement[]; activeIndex: number }) => {
   const { menu, activeIndex } = props
@@ -29,11 +29,7 @@ export const Dropdown = (props: { menu: ReactElement[]; activeIndex: number }) =
   return (
     <div className="dropdown relative" ref={ref}>
       <button onClick={handleOpen} className="p-4 hover:bg-gray-600 user-">
-        {!open ? (
-          <BiChevronDown className="pointer-events-none" />
-        ) : (
-          <BiChevronUp className="pointer-events-none" />
-        )}
+        <BiSliderAlt />
       </button>
       {open ? (
         <ul className="dropdown_menu absolute z-50 rounded-md rounded-tr-none rounded-tl-none drop-shadow-md w-56 max-h-52 overflow-auto">

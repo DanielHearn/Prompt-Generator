@@ -15,7 +15,6 @@ import {
   BiDownArrow,
   BiUpArrow,
   BiDotsVerticalRounded,
-  BiMinus,
   BiTrash,
 } from 'react-icons/bi'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
@@ -44,23 +43,23 @@ export const Word = (props: {
       <div className="word flex flex-row bg-gray-700 text-white rounded-md mr-2 ml-2">
         <div
           className={`flex flex-col ${
-            mobile ? '' : 'p-4'
+            mobile ? '' : 'p-2'
           } items-center justify-center bg-slate-600 rounded-bl-md rounded-tl-md cursor-pointer reorder-handle`}
           onPointerDown={(e) => controls.start(e)}
         >
           {mobile ? (
             <>
               {index === 0 ? (
-                <div className="flex flex-1 p-4">{''}</div>
+                <div className="flex flex-1 p-2">{''}</div>
               ) : (
-                <button className="flex flex-1 p-4 select-none" onClick={() => onMove(true)}>
+                <button className="flex flex-1 p-2 select-none" onClick={() => onMove(true)}>
                   <BiUpArrow />
                 </button>
               )}
               {index === totalLength - 1 ? (
-                <div className="flex flex-1 p-4">{''}</div>
+                <div className="flex flex-1 p-2">{''}</div>
               ) : (
-                <button className="flex flex-1 p-4 select-none" onClick={() => onMove(false)}>
+                <button className="flex flex-1 p-2 select-none" onClick={() => onMove(false)}>
                   <BiDownArrow />
                 </button>
               )}
@@ -70,7 +69,7 @@ export const Word = (props: {
           )}
         </div>
         <div className="flex flex-col">
-          <div className="word__value p-4 select-none">{word.value}</div>
+          <div className="word__value p-3 select-none">{word.value}</div>
           <div
             style={mobile ? { maxWidth: '280px', flexWrap: 'wrap' } : {}}
             className="flex flex-row border-solid border-t-2 border-slate-600 bg-gray-700"
@@ -88,7 +87,7 @@ export const Word = (props: {
               ))}
             />
             <button
-              className={`p-4 select-none ${
+              className={`p-3 select-none ${
                 word.locked ? 'bg-red-800 hover:bg-red-700' : `hover:bg-gray-600`
               }`}
               onClick={() => {
@@ -99,7 +98,7 @@ export const Word = (props: {
               {word.locked ? <BiLock /> : <BiLockOpen />}
             </button>
             <button
-              className={`p-4 select-none ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+              className={`p-3 select-none ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
               onClick={() => {
                 if (!word.locked) {
                   dispatch(regenerateWord({ word, id: word.id }))
@@ -112,7 +111,7 @@ export const Word = (props: {
             </button>
             {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
               <button
-                className={`flex flex-row items-center p-4 select-none ${
+                className={`flex flex-row items-center p-3 select-none ${
                   word.locked ? 'bg-gray-800' : `hover:bg-gray-600`
                 }`}
                 onClick={() => {
@@ -128,7 +127,7 @@ export const Word = (props: {
             )}
             {word.type === WORD_TYPES.ADJECTIVE_AND_LOCATION && (
               <button
-                className={`flex flex-row items-center p-4 select-none ${
+                className={`flex flex-row items-center p-3 select-none ${
                   word.locked ? 'bg-gray-800' : `hover:bg-gray-600`
                 }`}
                 onClick={() => {
@@ -143,7 +142,7 @@ export const Word = (props: {
               </button>
             )}
             <button
-              className={`p-4 select-none ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
+              className={`p-3 select-none ${word.locked ? 'bg-gray-800' : `hover:bg-gray-600`}`}
               onClick={() => {
                 if (!word.locked) {
                   dispatch(removeWord({ id: word.id }))
@@ -151,6 +150,7 @@ export const Word = (props: {
               }}
               disabled={word.locked}
               title={'Remove Word'}
+              style={{ borderBottomRightRadius: '4px' }}
             >
               <BiTrash />
             </button>
