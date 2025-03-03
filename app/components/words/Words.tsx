@@ -89,9 +89,8 @@ export const Words = () => {
         {formattedSentence}
       </div>
       <div
-        className={`flex flex-row pt-8 w-screen bg-gray-100 justify-center ${
-          !mobile && 'h-96 overflow-hidden'
-        }`}
+        className={`flex flex-row pt-4 h-96 w-screen bg-gray-100 justify-center`}
+        style={{ height: !mobile ? '22rem' : 'auto' }}
       >
         <div className={!mobile ? 'overflow-auto pl-8 w-full' : ''}>
           <Reorder.Group
