@@ -16,6 +16,7 @@ import {
   BiUpArrow,
   BiDotsVerticalRounded,
   BiMinus,
+  BiTrash,
 } from 'react-icons/bi'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import Dropdown from '../dropdown/Dropdown'
@@ -151,7 +152,7 @@ export const Word = (props: {
               disabled={word.locked}
               title={'Remove Word'}
             >
-              <BiMinus />
+              <BiTrash />
             </button>
           </div>
         </div>
